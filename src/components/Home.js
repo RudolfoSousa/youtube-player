@@ -11,7 +11,6 @@ class Home extends Component {
     }
 
     render(){
-        console.log(this.props.state)
         return(
             <div className="home">
                 <div className="container">
