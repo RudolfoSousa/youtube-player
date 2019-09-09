@@ -11,7 +11,9 @@ export default function(state=innitial_state, action) {
     case AUTHENTICATE_BEGIN:
         return{
             ...state,
-            loading: true
+            loading: true,
+            authenticated: false,
+            error: null
         }
     case AUTHENTICATED:
       return { 
@@ -20,7 +22,11 @@ export default function(state=innitial_state, action) {
         loading: false
     };
     case UNAUTHENTICATED:
-      return { ...state, authenticated: false };
+      return {
+        ...state,
+        authenticated: false,
+        error: action.payload.error 
+      };
     case AUTHENTICATION_ERROR:
       return { ...state, error: action.payload };
       default: 
