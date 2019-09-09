@@ -14,9 +14,22 @@ export const authSuccess = () => ({
     type: AUTHENTICATED
 })
 
-export function login(name){
+export const authFailed = (error) => ({
+    type: UNAUTHENTICATED,
+    payload: {error}
+})
+
+export function login(user){
     return async dispatch => {
-        dispatch(authBegin);
-        socket.emit("login")
+        localStorage.setItem('user', user);
+        dispatch(authBegin());
+        socket.emit("login", user, (valido) => {
+            if(valido){
+                dispatch(authSuccess());
+            }else{
+                var error = true;
+                dispatch(authFailed(error));
+            }
+        })
     }
 }
